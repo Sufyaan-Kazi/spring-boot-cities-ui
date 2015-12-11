@@ -1,0 +1,9 @@
+spring:
+  profiles.active: default
+  
+---
+spring:
+  profiles: default
+  cities_ws_url: ${vcap.services.citiesService.credentials.uri:http://localhost:8080/cities}
+server:
+  port: 8081

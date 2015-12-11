@@ -1,0 +1,21 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css" href="../css/main.css"
+	th:ref="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"
+	th:ref="@{/css/bootstrap.css}" />
+<link rel="stylesheet" type="text/css" href="../css/myCss.css"
+	th:ref="@{/css/myCss.css}" />
+</head>
+
+<body>
+	<div th:include="cities :: nav"></div>
+
+	<div th:include="cities :: form"></div>
+
+	<div th:include="cities :: table"></div>
+	<div th:include="cities :: pagination"></div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div th:fragment="nav">
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ui-sref="home.jobs.tabs.definitions"></a>
+
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1"></div>
+		</div>
+	</nav>
+</div>
+
+<div th:fragment="form" class="container">
+	<div class="container">
+		<div class="container-fluid">
+			<form name="searchForm" class="form-horizontal" th:action="@{/}"
+				th:object="${formInput}">
+				<div class="form-group">
+					<label class="control-label col-md-2" for="name">City Name</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="name" name="name" th:field="*{name}" />
+					</div>
+					<div class="col-md-2">
+						<input type="submit" class="btn btn-primary btn-md active" />
+						<input type="reset" class="btn btn-warning btn-md active" value="clear" />
+					</div>
+
+					<label class="control-label col-md-2" for="pageSize">Items
+						per page</label>
+					<div class="col-md-1">
+						<select class="form-control" id="pageSize" name="size"
+							th:field="*{size}" th:value="${pagedCities.metadata.size}"
+							onchange="this.form.submit()">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+						</select>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="table" class="container">
+	<div class="container">
+		<div class="container-fluid">
+			<table class="table table-striped table-hover">
+				<thead>
+					<th>Postal Code</th>
+					<th>City</th>
+					<th>County</th>
+					<th>State Code</th>
+					<th>Map</th>
+				</thead>
+				<tbody>
+					<tr th:each="city : ${pagedCities.content}">
+						<td width="15%" th:text="${city.postalCode}"></td>
+						<td width="30%" th:text="${city.name}"></td>
+						<td width="30%" th:text="${city.county}"></td>
+						<td width="10%" th:text="${city.stateCode}"></td>
+						<td width="15%"><a target="_blank"
+							th:href="@{http://maps.google.com/maps/(q=${#strings.append(#strings.append(#strings.replace(city.latitude,'+',''),','),city.longitude)})}">
+								<span class="glyphicon glyphicon-map-marker"></span>
+						</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<div th:fragment="pagination" class="col-md-12 text-center center-block">
+	<div class="container">
+		<div class="container-fluid center-block">
+			<div class="col-md-12 text-center center-block">
+				<p
+					th:text="'Displaying items ' + ${pagedCities.metadata.number*pagedCities.metadata.size+1} +' through '+${pagedCities.metadata.number*pagedCities.metadata.size+pagedCities.metadata.size}
+					+' of ' + ${pagedCities.metadata.totalElements} + ' in ' + ${pagedCities.metadata.totalPages} + ' pages.'">
+				</p>
+			</div>
+			<div class="center-block text-center">
+				<ul class="pagination">
+					<li
+						th:class="${pagedCities.metadata.number le 0} ? 'disabled' : ''"><a
+						th:if="${pagedCities.metadata.number gt 0}"
+						th:href="@{${'/'}(page=0,size=${pagedCities.metadata.size})}">First</a>
+					</li>
+					<li
+						th:class="${pagedCities.metadata.number le 0} ? 'disabled' : ''"><a
+						th:if="${pagedCities.metadata.number gt 0}"
+						th:href="@{${'/'}(page=${pagedCities.metadata.number-1},size=${pagedCities.metadata.size})}">Previous</a>
+					</li>
+
+					<li
+						th:each="pageNo : ${#numbers.sequence(0, pagedCities.metadata.totalPages - 1)}"
+						th:class="${pagedCities.metadata.number eq pageNo}? 'active' : ''"><a
+						th:if="${pagedCities.metadata.number  eq pageNo}"
+						href="javascript:void(0);"> <span th:text="${pageNo + 1}"></span>
+					</a> <a th:if="${not (pagedCities.metadata.number  eq pageNo)}"
+						th:href="@{${'/'}(page=${pageNo},size=${pagedCities.metadata.size})}">
+							<span th:text="${pageNo + 1}"></span>
+					</a></li>
+					<li
+						th:class="${pagedCities.metadata.number+1  ge pagedCities.metadata.totalPages} ? 'disabled' : ''">
+						<a
+						th:if="${pagedCities.metadata.number+1  lt pagedCities.metadata.totalPages}"
+						th:href="@{${'/'}(page=${pagedCities.metadata.number+1},size=${pagedCities.metadata.size})}">Next</a>
+					</li>
+					<li
+						th:class="${pagedCities.metadata.number+1  ge pagedCities.metadata.totalPages} ? 'disabled' : ''">
+						<a
+						th:if="${pagedCities.metadata.number+1  lt pagedCities.metadata.totalPages}"
+						th:href="@{${'/'}(page=${pagedCities.metadata.totalPages-1},size=${pagedCities.metadata.size})}">Last</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
