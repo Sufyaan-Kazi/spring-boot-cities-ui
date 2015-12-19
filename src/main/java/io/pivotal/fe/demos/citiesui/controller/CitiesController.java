@@ -27,7 +27,7 @@ public class CitiesController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model uiModel, Pageable pageable) {
-		logger.info("In index message.");
+		//logger.info("In index message.");
 
 		PagedCities cities = list(pageable);
 		uiModel.addAttribute("pagedCities", cities);
@@ -41,7 +41,7 @@ public class CitiesController {
 
 	@RequestMapping(value = "/", params = { "name", "size" }, method = RequestMethod.GET)
 	public String search(@RequestParam("name") String name, @RequestParam("size") Long size, Model uiModel, Pageable pageable) {
-		logger.info("Searching for: " + name);
+		//logger.info("Searching for: " + name);
 		PagedCities cities = search(name, pageable);
 		uiModel.addAttribute("pagedCities", cities);
 		FormInput input = new FormInput(name, size);

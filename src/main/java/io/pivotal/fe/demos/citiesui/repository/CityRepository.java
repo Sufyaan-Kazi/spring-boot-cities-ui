@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.core.env.Environment;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.HttpStatus;
@@ -24,19 +25,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.pivotal.fe.demos.citiesui.model.PagedCities;
 
 @Repository
-@ConfigurationProperties(prefix="spring")
+@ConfigurationProperties(prefix="pivotal")
 public class CityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(CityRepository.class);
-	private String cities_ws_url;
+	private String citiesServiceName;
 	
-	//@Autowired
+	@Autowired
+	@LoadBalanced
 	private RestTemplate restTemplate;
 	
 	public CityRepository() {
-		restTemplate = restTemplate();
+		//restTemplate = restTemplate();
+		//restTemplate();
 	}
 	
-	private RestTemplate restTemplate() {
+	private void restTemplate() {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.registerModule(new Jackson2HalModule());
@@ -47,12 +50,15 @@ public class CityRepository {
 		//mediaTypes.addAll(MediaType.parseMediaTypes("application/*.hal+json"));
 		converter.setSupportedMediaTypes(mediaTypes);
 		converter.setObjectMapper(mapper);
-		return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		
+		restTemplate.setMessageConverters(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		//return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
 	}
 	
 	public PagedCities findAll(Integer page, Integer size) {
-		//logger.info("Calling: " + cities_ws_url);
-		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "?page=" + page + "&size=" + size, PagedCities.class);
+		logger.info("Calling: " + citiesServiceName + ", " + page + ", " + size);
+		restTemplate();
+		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity("http://" + citiesServiceName + "/cities?page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;
 		}
@@ -60,7 +66,7 @@ public class CityRepository {
 	}
 	
 	public PagedCities findByNameContains(String name, Integer page, Integer size) {
-		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "/search/nameContains?q=" + name + "&page=" + page + "&size=" + size, PagedCities.class);
+		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity("http://" + citiesServiceName + "/cities/search/nameContains?q=" + name + "&page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;
 		}
@@ -68,11 +74,11 @@ public class CityRepository {
 		return responseEntity.getBody();
 	}
 
-	public String getCities_ws_url() {
-		return cities_ws_url;
+	public String getCitiesServiceName() {
+		return citiesServiceName;
 	}
 
-	public void setCities_ws_url(String cities_ws_url) {
-		this.cities_ws_url = cities_ws_url;
+	public void setCitiesServiceName(String citiesServiceName) {
+		this.citiesServiceName = citiesServiceName;
 	}
 }
