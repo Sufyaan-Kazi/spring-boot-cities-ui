@@ -3,7 +3,7 @@ This is a simple Spring Boot UI which can consume CITY data and present it graph
 
 The SCS branch uses Spring Cloud Services to discover the other Microservice
 
-To connect the two microservices, deploy both to CF and construct a User Provided Service within the space this app is deployed to:
+To connect the two microservices, deploy both to CF and construct a User Provided Service within the space this app is deployed to -. MAKE SURE you don't use a https url, change it to http to avoid security.
 
 ```cf cups citiesService -p '{"tag":"cities","uri":"http://.....CF-ROUTE.../cities"}'```
 
