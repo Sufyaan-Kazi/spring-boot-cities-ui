@@ -9,7 +9,13 @@ cf delete -f $APPNAME
 cf push -b java_buildpack_offline --no-start --no-route
 echo ""
 echo "Setting environment for SCS"
-cf set-env $APPNAME CF_TARGET https://apps.emea-2.fe.gopivotal.com
+
+# Work out the CF_TARGET
+CF_TARGET=`cf target | grep "API" | cut -d" " -f5| xargs`
+cf set-env $APPNAME CF_TARGET $CF_TARGET
+
+# Uncomment following lines if not deploying ot the same space as back-end service (i.e. with a SI already there)
+
 # echo ""
 
 # Sleep for service registry
