@@ -1,0 +1,11 @@
+vi src/main/resources/templates/index.html
+
+git add src/main/resources/templates/index.html
+git commit -m "After Change"
+git push
+
+git log
+
+git reset --hard <commit_id>
+
+git push -f origin 
