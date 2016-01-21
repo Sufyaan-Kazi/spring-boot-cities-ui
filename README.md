@@ -11,3 +11,5 @@ This builds the code, removes previous instances, sets up the Cloud Foundry envi
 To run this standalone outside of cloudfoundry, simply run:
 
 ``` ./gradlew bootRun ```
+
+![Cities](/docs/Cities.png)
