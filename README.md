@@ -1,10 +1,13 @@
 # spring-boot-cities-ui
-This is a simple Spring Boot UI which can consume CITY data and present it graphically using Thymeleaf. It consumes data for example from this microservice: https://github.com/skazi-pivotal/SBoot-Cities-Service
+This is a simple Spring Boot UI which can consume CITY data and present it graphically using Thymeleaf. It consumes data for example from this microservice: https://github.com/skazi-pivotal/SBoot-Cities-Service. The SCS branch uses Spring Cloud Services to discover the other Microservice.
 
-The SCS branch uses Spring Cloud Services to discover the other Microservice
+To run this app in Cloud Foundry:
+Edit the script first_time_push.sh and correct the URL of the running copy of the cities microservice (TIP: don't use https). Then simply run the script:
 
-To connect the two microservices, deploy both to CF and construct a User Provided Service within the space this app is deployed to -. MAKE SURE you don't use a https url, change it to http to avoid security.
+``` ./first_time_push.sh ```
 
-```cf cups citiesService -p '{"tag":"cities","uri":"http://.....CF-ROUTE.../cities"}'```
+This builds the code, removes previous instances, sets up the Cloud Foundry environment and pushes the app. Thereafter, just directly use ``` ./push.sh ``` to build and push the app.
 
-Note - The above URL does not need to be https it can be http, especially if you are using self-generated certificates
+To run this standalone outside of cloudfoundry, simply run:
+
+``` ./gradlew bootRun ```
