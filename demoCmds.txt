@@ -1,11 +1,16 @@
+# For the demo - edit the index.html using the following command, and uncomment as instructed
 vi src/main/resources/templates/index.html
 
+
+# and then check the change in and either manually trigger a build job in jenkins or let it happen automatically through polling
 git add src/main/resources/templates/index.html
 git commit -m "After Change"
 git push
 
+
+# To reset it all, run the following command
+# Find the id before the change and reset to that state using this second command
+# and push this back to the branch on your fork of the repo using the thrid cmmand
 git log
-
 git reset --hard <commit_id>
-
 git push -f origin 
