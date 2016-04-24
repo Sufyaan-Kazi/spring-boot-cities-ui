@@ -19,7 +19,7 @@ security:
   basic:
     enabled: false
 pivotal:
-  citiesServiceName: cities
+  citiesServiceName: cities-service
   
 ---
 spring:
