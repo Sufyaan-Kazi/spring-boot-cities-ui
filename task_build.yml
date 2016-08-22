@@ -14,5 +14,4 @@ outputs:
 - name: build
 
 run:
-  path: "source-code/gradlew"
-  args: ["build"]
+  path: source-code/build.sh
