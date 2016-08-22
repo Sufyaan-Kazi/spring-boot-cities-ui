@@ -3,4 +3,5 @@
 cf delete -f cities-ui
 cf delete-service -f citiesService
 cf cups citiesService -p '{"tags":"cities","uri":"http://INSERT YOUR URL HERE/cities"}'
-cf push -b java_buildpack_offline
+BPACK=`cf buildpacks | grep java | grep true | head -n 1 | cut -d ' ' -f1 | xargs`
+cf push -b ${BPACK}
