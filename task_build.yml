@@ -6,4 +6,4 @@ image_resource:
   source: {repository: busybox}
 
 run:
-  path: gradlew build
+  path: ./gradlew build
