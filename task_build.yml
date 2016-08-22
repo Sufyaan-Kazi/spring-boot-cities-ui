@@ -15,8 +15,4 @@ outputs:
 
 run:
   path: "source-code/gradlew"
-  args: ["--build-file", "source-code/build.gradle", "build"]
-
-params:
-  TERM: -dumb
-  GRADLE_OPTS: -Dorg.gradle.native=false
+  args: ["build"]
