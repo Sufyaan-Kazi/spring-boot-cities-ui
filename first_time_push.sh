@@ -29,5 +29,6 @@ cf set-env $APPNAME CF_TARGET $CF_TARGET
 # Carry on pushing
 echo ""
 echo "Pushing App!"
-cf push -b java_buildpack_offline
+BPACK=`cf buildpacks | grep java | grep true | head -n 1 | cut -d ' ' -f1 | xargs`
+cf push -b ${BPACK}
 

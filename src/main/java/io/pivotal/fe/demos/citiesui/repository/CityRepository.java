@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import io.pivotal.fe.demos.citiesui.model.PagedCities;
 
@@ -55,6 +57,7 @@ public class CityRepository {
 		//return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
 	}
 	
+	@HystrixCommand(fallbackMethod = "getDefaultAll")
 	public PagedCities findAll(Integer page, Integer size) {
 		logger.info("Calling: " + citiesServiceName + ", " + page + ", " + size);
 		restTemplate();
@@ -63,6 +66,12 @@ public class CityRepository {
 			return null;
 		}
 		return responseEntity.getBody();
+	}
+	
+	private PagedCities getDefaultAll(Pageable pageable) {
+		PagedCities defaultPagedCities = new PagedCities();
+		
+		return defaultPagedCities;
 	}
 	
 	public PagedCities findByNameContains(String name, Integer page, Integer size) {

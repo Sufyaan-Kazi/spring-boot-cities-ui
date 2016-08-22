@@ -3,13 +3,15 @@ package io.pivotal.fe.demos.citiesui.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import io.pivotal.fe.demos.citiesui.model.FormInput;
 import io.pivotal.fe.demos.citiesui.model.PagedCities;
@@ -35,8 +37,15 @@ public class CitiesController {
 		return "index";
 	}
 
+	//@HystrixCommand(fallbackMethod = "defaultList")
 	public PagedCities list(Pageable pageable) {
 		return repository.findAll(pageable.getPageNumber(), pageable.getPageSize());
+	}
+	
+	private PagedCities defaultList(Pageable pageable) {
+		PagedCities citiesDefault = new PagedCities();
+		citiesDefault.add(new Link(""));
+		return citiesDefault;
 	}
 
 	@RequestMapping(value = "/", params = { "name", "size" }, method = RequestMethod.GET)
