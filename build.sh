@@ -2,4 +2,4 @@
 pwd
 ls source-code
 
-./source-code/gradlew build
+source-code/gradlew build
