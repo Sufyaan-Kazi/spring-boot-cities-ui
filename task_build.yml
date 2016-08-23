@@ -11,7 +11,7 @@ inputs:
   - name: source-code
 
 outputs:
-  - name: build/libs
+  - name: source_code/build/libs
 
 run:
   path: ./source-code/build.sh
