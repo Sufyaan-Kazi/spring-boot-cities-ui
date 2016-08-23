@@ -1,6 +1,6 @@
 #!/bin/bash 
 set -e
-
+#
 abort()
 {
     echo >&2 '
