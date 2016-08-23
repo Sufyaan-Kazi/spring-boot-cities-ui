@@ -14,4 +14,4 @@ outputs:
   - name: build/libs
 
 run:
-  path: ./source-code/build.sh
+  path: ./build.sh
