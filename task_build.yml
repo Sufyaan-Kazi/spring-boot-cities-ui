@@ -11,8 +11,7 @@ inputs:
   - name: source-code
 
 outputs:
-  name: artifact
-  path: build/libs/
+  - name: build
 
 run:
   path: "source-code/build.sh"
