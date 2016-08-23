@@ -10,8 +10,5 @@ image_resource:
 inputs:
   - name: source-code
 
-outputs:
-  - name: source_code/build/libs
-
 run:
   path: "source-code/build.sh"
