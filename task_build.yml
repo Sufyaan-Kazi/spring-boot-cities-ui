@@ -11,8 +11,8 @@ inputs:
   - name: source-code
 
 run:
-  path: source-code/gradlew
-  args: ["build"]
+  path: "source-code/gradlew"
+  args: ["--build-file", "source-code/build.gradle", "assemble"]
 
 params:
   TERM: -dumb
