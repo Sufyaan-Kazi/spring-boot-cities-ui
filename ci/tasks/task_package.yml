@@ -8,10 +8,10 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: source-code
+  - name: cities-ui
 
 outputs:
   - name: build
 
 run:
-  path: "source-code/ci/package.sh"
+  path: "cities-ui/ci/scripts/package.sh"
