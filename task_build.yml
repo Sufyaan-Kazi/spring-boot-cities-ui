@@ -14,9 +14,4 @@ outputs:
   - name: source_code/build/libs
 
 run:
-  path: "source-code/gradlew"
-  args: ["--build-file", "source-code/build.gradle", "assemble"]
-
-params:
-  TERM: -dumb
-  GRADLE_OPTS: -Dorg.gradle.native=false
+  path: "source-code/build.sh"
