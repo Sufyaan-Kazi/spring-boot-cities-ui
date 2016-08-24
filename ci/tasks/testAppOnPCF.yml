@@ -12,4 +12,4 @@ inputs:
 
 run:
   path: "cities-ui/ci/scripts/testAppOnPCF.sh"
-  args: ["http://cities-ui-unphased-permeability.cfapps.haas-35.pez.pivotal.io/", "Aldermoor"]
+  args: ["Aldermoor"]
