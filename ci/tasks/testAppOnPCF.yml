@@ -4,12 +4,10 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: java
-    tag: latest
+    repository: concourse/cf-resource
 
 inputs:
   - name: cities-ui
 
 run:
   path: "cities-ui/ci/scripts/testAppOnPCF.sh"
-  args: ["-t", "Aldermoor", "-a", "api.run.haas-35.pez.pivotal.io", "-u", "skazi", "-p", "letmein", "-o", "skazi", "-s", "cities"]
