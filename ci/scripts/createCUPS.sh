@@ -15,6 +15,7 @@ cf_service_delete()
 main()
 {
   SERVICE=citiesService
+  find / -name cf
   #install_cli 
   cf_service_delete $SERVICE
   URL=`cf apps | grep cities-service | xargs | cut -d " " -f 6`
