@@ -3,9 +3,6 @@
 
 searchForCity()
 {
-  echo $CITIES_SERVICE_ROUTE
-  curl -s $CITIES_SERVICE_ROUTE 
-  curl -s $CITIES_SERVICE_ROUTE | grep "Aldermoor"
   running=`curl -s $CITIES_SERVICE_ROUTE | grep "Aldermoor"`
   if [ -z "${running}" ]
   then
