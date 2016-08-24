@@ -49,8 +49,10 @@ main()
   clean_cf
 }
 
+trap 'abort $LINENO' 0
 SECONDS=0
-trap 'abort' 0
+SCRIPTNAME=`basename "$0"`
+
 while [ "$1" != "" ]; do
 case $1 in
         -u )           shift
