@@ -10,4 +10,4 @@ inputs:
   - name: cities-ui
 
 run:
-  path: "{{APPNAME}}/ci/scripts/createCUPS.sh"
+  path: "cities-ui/ci/scripts/createCUPS.sh"
