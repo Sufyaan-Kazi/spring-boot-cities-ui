@@ -49,7 +49,7 @@ main()
   clean_cf
 }
 
-trap 'abort' 0
+trap 'abort $LINENO' 0
 SECONDS=0
 
 while [ "$1" != "" ]; do
@@ -75,4 +75,4 @@ done
 
 main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
-trap : 0
+exit 0
