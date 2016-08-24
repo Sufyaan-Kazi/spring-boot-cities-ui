@@ -1,22 +1,5 @@
-#!/bin/bash 
-set -e
-
-abort()
-{
-    echo >&2 '
-    ***************
-    *** ABORTED ***
-    ***************
-    '
-    echo "An error occurred. Exiting..." >&2
-    exit 1
-}
-
-echo_msg()
-{
-  echo ""
-  echo "************** ${1} **************"
-}
+#!/bin/sh 
+source commons.sh
 
 cf_app_delete()
 {
@@ -26,14 +9,6 @@ cf_app_delete()
     echo "Deleting app"
     cf delete -f -r ${1}
   fi
-}
-
-install_cli()
-{
-  curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
-  export PATH=.:$PATH
-  cf --version
-  cf login -a $CF_API -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
 }
 
 clean_cf()
@@ -71,8 +46,6 @@ case $1 in
     esac
     shift
 done
-echo $CF_API
-main
-#main $CF_DOMAIN $CF_USER $CF_PASSWORD $CF_ORG $CF_SPACE
-trap : 0
-echo_msg "Completed in $SECONDS seconds."
+
+printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
+exit 0

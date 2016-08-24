@@ -12,4 +12,4 @@ inputs:
 
 run:
   path: "cities-ui/ci/scripts/testAppOnPCF.sh"
-  args: ["Aldermoor"]
+  args: ["-t", "Aldermoor", "-a", "api.run.haas-35.pez.pivotal.io", "-u", "skazi", "-p", "letmein", "-o", "skazi", "-s", "cities"]
