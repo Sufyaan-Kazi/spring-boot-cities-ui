@@ -49,7 +49,7 @@ main()
   clean_cf
 }
 
-trap 'abort $LINENO' 0
+trap 'abort' 0
 SECONDS=0
 
 while [ "$1" != "" ]; do
