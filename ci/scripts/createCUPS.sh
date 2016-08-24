@@ -15,7 +15,7 @@ cf_service_delete()
 main()
 {
   SERVICE=citiesService
-  install_cli 
+  #install_cli 
   cf_service_delete $SERVICE
   URL=`cf apps | grep cities-service | xargs | cut -d " " -f 6`
   cf cups citiesService -p '{"tags":"cities","uri":"http://'"$URL"'/cities"}'
