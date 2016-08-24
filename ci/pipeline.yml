@@ -17,13 +17,6 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: test-cities-ui
-  plan:
-  - get: cities-ui
-    trigger: true
-  - task: test
-    file: cities-ui/ci/tasks/task_test.yml
-
 - name: check-cities-service-isDeployed
   plan:
   - get: cities-ui
@@ -32,6 +25,14 @@ jobs:
     file: cities-ui/ci/tasks/check-service.yml
     params:
       CITIES-SERVICE-ROUTE: {{CITIES-SERVICE-ROUTE}}
+
+- name: test-cities-ui
+  plan:
+  - get: cities-ui
+    trigger: true
+    passed: [check-cities-service-isDeployed]
+  - task: test
+    file: cities-ui/ci/tasks/task_test.yml
 
 - name: create-ui-env
   plan:

@@ -10,4 +10,4 @@ inputs:
   - name: cities-ui
 
 run:
-  path: "cities-ui/ci/scripts/testServiceExists.sh
+  path: "cities-ui/ci/scripts/testServiceExists.sh"
