@@ -25,7 +25,7 @@ jobs:
     file: cities-ui/ci/tasks/check-service.yml
     params:
       APPNAME: {{APPNAME}}
-      CITIES-SERVICE-ROUTE: {{CITIES-SERVICE-ROUTE}}
+      CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 - name: test-cities-ui
   plan:
