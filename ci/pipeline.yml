@@ -46,6 +46,8 @@ jobs:
     passed: [test-cities-ui, create-ui-env]
   - task: package
     file: cities-ui/ci/tasks/task_package.yml
+    params:
+      APPNAME: {{APPNAME}}
   - put: deploy-app
     params:
       manifest: cities-ui/manifest.yml

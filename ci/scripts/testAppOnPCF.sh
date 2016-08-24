@@ -23,9 +23,10 @@ searchForCity()
 
 main()
 {
-  install_cli
+  cf_login
   checkAppIsDeployed
   searchForCity
+  cf logout
 }
 
 trap 'abort $LINENO' 0
