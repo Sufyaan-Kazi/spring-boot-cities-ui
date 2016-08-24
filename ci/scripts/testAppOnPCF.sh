@@ -38,8 +38,8 @@ checkAppIsDeployed()
 
 searchForCity()
 {
-  curl -s $URL | grep $1
-  running=`curl -s $URL | grep $1`
+  curl -s $URL | grep "Aldermoor"
+  running=`curl -s $URL | grep "Aldermoor"`
   if [ -z "${running}" ]
   then
     exit 1
