@@ -8,6 +8,7 @@ cf_service_delete()
   EXISTS=`cf services | grep ${1} | wc -l | xargs`
   if [ $EXISTS -ne 0 ]
   then
+    cf unbind-service $APPNAME ${1}
     cf delete-service -f ${1}
   fi
 }
