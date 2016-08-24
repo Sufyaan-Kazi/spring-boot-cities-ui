@@ -1,5 +1,5 @@
 #!/bin/sh
-source commons.sh 
+SECONDS=0
 
 export TERM=${TERM:-dumb}
 echo_msg "Starting"
