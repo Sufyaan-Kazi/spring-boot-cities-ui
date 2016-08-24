@@ -49,7 +49,6 @@ main()
   clean_cf
 }
 
-echo "hello"
 trap 'abort $LINENO' 0
 SECONDS=0
 
@@ -74,5 +73,6 @@ case $1 in
     shift
 done
 
+main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
 exit 0
