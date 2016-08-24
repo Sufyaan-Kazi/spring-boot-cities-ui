@@ -51,6 +51,7 @@ main()
 
 trap 'abort $LINENO' 0
 SECONDS=0
+SCRIPTNAME=`basename "$0"`
 
 while [ "$1" != "" ]; do
 case $1 in

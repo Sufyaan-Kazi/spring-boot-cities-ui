@@ -77,5 +77,6 @@ case $1 in
     shift
 done
 
+main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
-exit 0
+trap : 0
