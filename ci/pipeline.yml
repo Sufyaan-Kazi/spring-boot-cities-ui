@@ -1,0 +1,72 @@
+---
+resources:
+- name: cities-ui
+  type: git
+  source:
+    uri: https://github.com/skazi-pivotal/spring-boot-cities-ui
+
+- name: deploy-app
+  type: cf
+  source:
+    api: {{cf-api}}
+    username: {{cf-username}}
+    password: {{cf-password}}
+    organization: {{cf-organization}}
+    space: {{cf-space}}
+    skip_cert_check: true
+
+jobs:
+- name: test-cities-ui
+  plan:
+  - get: cities-ui
+    trigger: true
+  - task: test
+    file: cities-ui/ci/tasks/task_test.yml
+
+- name: create-ui-env
+  plan:
+  - get: cities-ui
+    trigger: true
+  - task: delete-app
+    file: cities-ui/ci/tasks/deleteApp.yml
+    params:
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-organization}}
+      space: {{cf-space}}
+  - task: create-cups
+    file: cities-ui/ci/tasks/createCUPS.yml
+    params:
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-organization}}
+      space: {{cf-space}}
+
+- name: deploy-cities-ui
+  plan:
+  - get: cities-ui
+    trigger: true
+    passed: [test-cities-ui, create-ui-env]
+  - task: package
+    file: cities-ui/ci/tasks/task_package.yml
+  - put: deploy-app
+    params:
+      manifest: cities-ui/manifest.yml
+      path: build/cities-ui-0.0.1-SNAPSHOT.jar
+      current_app_name: cities-ui
+
+- name: test-cities-app
+  plan:
+  - get: cities-ui
+    trigger: true
+    passed: [deploy-cities-ui]
+  - task: test
+    file: cities-ui/ci/tasks/testAppOnPCF.yml
+    params:
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-organization}}
+      space: {{cf-space}}
