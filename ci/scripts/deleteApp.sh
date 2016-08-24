@@ -49,6 +49,7 @@ main()
   clean_cf
 }
 
+echo "hello"
 trap 'abort $LINENO' 0
 SECONDS=0
 SCRIPTNAME=`basename "$0"`
