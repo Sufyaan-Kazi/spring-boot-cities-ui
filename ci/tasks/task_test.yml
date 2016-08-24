@@ -4,8 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: java
-    tag: latest
+    repository: denvazh/java
 
 inputs:
   - name: cities-ui
