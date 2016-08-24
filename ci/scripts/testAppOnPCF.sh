@@ -1,5 +1,5 @@
 #!/bin/sh 
-source commons.sh
+source ./commons.sh
 
 install_cli
 URL=`cf apps | grep cities-ui | xargs | cut -d " " -f 6`
