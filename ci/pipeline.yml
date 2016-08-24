@@ -8,11 +8,11 @@ resources:
 - name: deploy-app
   type: cf
   source:
-    api: {{cf-api}}
-    username: {{cf-username}}
-    password: {{cf-password}}
-    organization: {{cf-organization}}
-    space: {{cf-space}}
+    api: {{CF_API}}
+    username: {{CF_USERNAME}}
+    password: {{CF_PASSWORD}}
+    organization: {{CF_ORG}}
+    space: {{CF_SPACE}}
     skip_cert_check: true
 
 jobs:
@@ -30,21 +30,23 @@ jobs:
   - task: delete-app
     file: cities-ui/ci/tasks/deleteApp.yml
     params:
-      api: {{cf-api}}
-      username: {{cf-username}}
-      password: {{cf-password}}
-      organization: {{cf-organization}}
-      space: {{cf-space}}
-      ssl: {{ssl}}
+      api: {{CF_API}}
+      username: {{CF_USERNAME}}
+      password: {{CF_PASSWORD}}
+      organization: {{CF_ORG}}
+      space: {{CF_SPACE}}
+      ssl: {{CF_SSL}}
+      APPNAME: {{APPNAME}}
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
-      api: {{cf-api}}
-      username: {{cf-username}}
-      password: {{cf-password}}
-      organization: {{cf-organization}}
-      space: {{cf-space}}
-      ssl: {{ssl}}
+      api: {{CF_API}}
+      username: {{CF_USERNAME}}
+      password: {{CF_PASSWORD}}
+      organization: {{CF_ORG}}
+      space: {{CF_SPACE}}
+      ssl: {{CF_SSL}}
+      APPNAME: {{APPNAME}}
 
 - name: deploy-cities-ui
   plan:
@@ -57,7 +59,7 @@ jobs:
     params:
       manifest: cities-ui/manifest.yml
       path: build/cities-ui-0.0.1-SNAPSHOT.jar
-      current_app_name: cities-ui
+      current_app_name: {{APPNAME}}
 
 - name: test-cities-app
   plan:
@@ -67,9 +69,10 @@ jobs:
   - task: test
     file: cities-ui/ci/tasks/testAppOnPCF.yml
     params:
-      api: {{cf-api}}
-      username: {{cf-username}}
-      password: {{cf-password}}
-      organization: {{cf-organization}}
-      space: {{cf-space}}
-      ssl: {{ssl}}
+      api: {{CF_API}}
+      username: {{CF_USERNAME}}
+      password: {{CF_PASSWORD}}
+      organization: {{CF_ORG}}
+      space: {{CF_SPACE}}
+      ssl: {{CF_SSL}}
+      APPNAME: {{APPNAME}}

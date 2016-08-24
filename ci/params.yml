@@ -1,6 +1,7 @@
-cf-api: https://api.run.haas-35.pez.pivotal.io
-cf-username: skazi
-cf-password: letmein
-cf-organization: skazi
-cf-space: cities
-ssl: --skip-ssl-validation
+CF_API: https://api.run.haas-35.pez.pivotal.io
+CF_USERNAME: skazi
+CF_PASSWORD: letmein
+CF_ORG: skazi
+CF_SPACE: cities
+CF_SSL: --skip-ssl-validation
+APPNAME: cities-ui
