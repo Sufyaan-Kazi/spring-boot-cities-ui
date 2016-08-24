@@ -14,9 +14,7 @@ searchForCity()
 
 main()
 {
-  cf_login
   searchForCity
-  cf logout
 }
 
 trap 'abort $LINENO' 0
