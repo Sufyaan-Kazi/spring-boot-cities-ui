@@ -1,5 +1,6 @@
 #!/bin/sh 
 set -e
+APPNAME=cities-ui
 
 abort()
 {
@@ -23,6 +24,6 @@ install_cli()
   curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
   export PATH=.:$PATH
   cf --version
-  cf login -a $api -u $username -p $password -o $organization -s $space --skip-ssl-validation
+  cf login -a $api -u $username -p $password -o $organization -s $space $ssl
 }
 

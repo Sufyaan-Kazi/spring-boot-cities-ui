@@ -3,3 +3,4 @@ cf-username: skazi
 cf-password: letmein
 cf-organization: skazi
 cf-space: cities
+ssl: --skip-ssl-validation

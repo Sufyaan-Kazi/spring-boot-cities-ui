@@ -35,6 +35,7 @@ jobs:
       password: {{cf-password}}
       organization: {{cf-organization}}
       space: {{cf-space}}
+      ssl: {{ssl}}
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
@@ -43,6 +44,7 @@ jobs:
       password: {{cf-password}}
       organization: {{cf-organization}}
       space: {{cf-space}}
+      ssl: {{ssl}}
 
 - name: deploy-cities-ui
   plan:
@@ -70,3 +72,4 @@ jobs:
       password: {{cf-password}}
       organization: {{cf-organization}}
       space: {{cf-space}}
+      ssl: {{ssl}}
