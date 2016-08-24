@@ -11,7 +11,7 @@ checkForNull()
 
 searchForCity()
 {
-  response=`curl -s $CITIES_SERVICE_ROUTE/health | grep "\"status\" : \"UP\""
+  response=`curl -s $CITIES_SERVICE_ROUTE/health | grep '"status" : "UP"'`
   checkForNull $response
   response=`curl -s $CITIES_SERVICE_ROUTE/cities/search/name?q=Aldemoor`
   checkForNull $response
