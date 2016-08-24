@@ -26,7 +26,3 @@ install_cli()
   cf login -a $api -u $username -p $password -o $organization -s $space --skip-ssl-validation
 }
 
-trap 'abort $LINENO' 0
-SECONDS=0
-SCRIPTNAME=`basename "$0"`
-
