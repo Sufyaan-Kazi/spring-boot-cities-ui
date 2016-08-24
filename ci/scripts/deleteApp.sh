@@ -75,4 +75,3 @@ done
 
 main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
-exit 0
