@@ -23,8 +23,7 @@ install_cli()
   curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
   export PATH=.:$PATH
   cf --version
-  echo ${api}
-  cf login -a $api -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
+  cf login -a $api -u $username -p $password -o $organization -s $space --skip-ssl-validation
 }
 
 cf_app_delete()
