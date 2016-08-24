@@ -4,6 +4,7 @@ resources:
   type: git
   source:
     uri: https://github.com/skazi-pivotal/spring-boot-cities-ui
+  check_every: 7s
 
 - name: deploy-app
   type: cf
@@ -27,16 +28,6 @@ jobs:
   plan:
   - get: cities-ui
     trigger: true
-  - task: delete-app
-    file: cities-ui/ci/tasks/deleteApp.yml
-    params:
-      api: {{CF_API}}
-      username: {{CF_USERNAME}}
-      password: {{CF_PASSWORD}}
-      organization: {{CF_ORG}}
-      space: {{CF_SPACE}}
-      ssl: {{CF_SSL}}
-      APPNAME: {{APPNAME}}
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:

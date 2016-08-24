@@ -4,7 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: java
+    repository: anapsix/alpine-java
     tag: latest
 
 inputs:
@@ -12,4 +12,3 @@ inputs:
 
 run:
   path: "cities-ui/ci/scripts/createCUPS.sh"
-  args: ["-a", "api.run.haas-35.pez.pivotal.io", "-u", "skazi", "-p", "letmein", "-o", "skazi", "-s", "cities"]
