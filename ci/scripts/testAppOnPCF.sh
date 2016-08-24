@@ -26,25 +26,60 @@ install_cli()
   cf login -a $CF_API -u $CF_USER -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
 }
 
+checkAppIsDeployed()
+{
+  URL=`cf apps | grep cities-ui | xargs | cut -d " " -f 6`
+  if [ -z "${URL}" ]
+  then
+   exit 1
+  fi
+  echo $1 -> $URL
+}
+
+searchForCity()
+{
+  curl -s $URL | grep $1
+  running=`curl -s $URL | grep $1`
+  if [ -z "${running}" ]
+  then
+    exit 1
+  fi
+  echo $running
+}
+
+main()
+{
+  install_cli
+  checkAppIsDeployed
+  searchForCity
+}
+
 trap 'abort $LINENO' 0
 SECONDS=0
 SCRIPTNAME=`basename "$0"`
 
-install_cli
-URL=`cf apps | grep cities-ui | xargs | cut -d " " -f 6`
-if [ -z "${URL}" ]
-then
- exit 1
-fi
-echo $1 -> $URL
+while [ "$1" != "" ]; do
+case $1 in
+        -u )           shift
+                       CF_USER=$1
+                       ;;
+        -p )           shift
+                       CF_PASSWORD=$1
+                       ;;
+        -o )           shift
+                       CF_ORG=$1
+                       ;;
+        -s )           shift
+                       CF_SPACE=$1
+                       ;;
+        -a )           shift
+                       CF_API=$1
+                       ;;
+    esac
+    shift
+done
 
-curl -s $URL | grep $1
-running=`curl -s $URL | grep $1`
-if [ -z "${running}" ]
-then
- exit 1 
-fi
-echo $running
-
+main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
-exit 0
+trap : 0
+
