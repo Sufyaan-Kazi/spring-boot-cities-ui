@@ -17,7 +17,7 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: check-cities-service-isDeployed
+- name: check-citiesService-isDeployed
   plan:
   - get: cities-ui
     trigger: true
@@ -30,7 +30,7 @@ jobs:
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check-cities-service-isDeployed]
+    passed: [check-citiesService-isDeployed]
   - task: test
     file: cities-ui/ci/tasks/task_test.yml
 
@@ -38,7 +38,7 @@ jobs:
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check-cities-service-isDeployed]
+    passed: [check-citiesService-isDeployed]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
