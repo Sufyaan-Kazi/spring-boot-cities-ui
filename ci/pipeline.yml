@@ -24,10 +24,20 @@ jobs:
   - task: test
     file: cities-ui/ci/tasks/task_test.yml
 
+- name: check-cities-service-isDeployed
+  plan:
+  - get: cities-ui
+    trigger: true
+  - task: check-service
+    file: cities-ui/ci/tasks/check-service.yml
+    params:
+      CITIES-SERVICE-ROUTE: {{CITIES-SERVICE-ROUTE}}
+
 - name: create-ui-env
   plan:
   - get: cities-ui
     trigger: true
+    passed: [check-cities-service-isDeployed]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
