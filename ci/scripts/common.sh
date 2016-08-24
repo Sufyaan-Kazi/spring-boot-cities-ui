@@ -21,7 +21,7 @@ echo_msg()
 
 cf_login()
 {
-  #cf --version
+  cf --version
   cf login -a $api -u $username -p $password -o $organization -s $space $ssl
 }
 
