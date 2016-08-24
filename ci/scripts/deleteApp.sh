@@ -75,4 +75,5 @@ done
 
 main
 printf "\nExecuted $SCRIPTNAME in $SECONDS seconds.\n"
+trap : 0
 exit 0
