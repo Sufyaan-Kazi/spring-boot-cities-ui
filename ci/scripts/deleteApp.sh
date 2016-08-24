@@ -1,7 +1,6 @@
 #!/bin/sh 
 set -e
-ls cities-ui/ci/scripts/
-source cities-ui/ci/scripts/common.sh
+. cities-ui/ci/scripts/common.sh
 
 cf_app_delete()
 {
