@@ -17,7 +17,7 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: check-citiesService-isDeployed
+- name: check4Deps
   plan:
   - get: cities-ui
     trigger: true
@@ -27,19 +27,19 @@ jobs:
       APPNAME: {{APPNAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
-- name: test-cities-ui
+- name: testSrc
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check-citiesService-isDeployed]
+    passed: [check4Deps]
   - task: test
     file: cities-ui/ci/tasks/task_test.yml
 
-- name: create-ui-env
+- name: prepPCFSpace
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check-citiesService-isDeployed]
+    passed: [check4Deps]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
@@ -52,11 +52,11 @@ jobs:
       APPNAME: {{APPNAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
-- name: deploy-cities-ui
+- name: deployApp
   plan:
   - get: cities-ui
     trigger: true
-    passed: [test-cities-ui, create-ui-env]
+    passed: [testSrc, prepPCFSpace]
   - task: package
     file: cities-ui/ci/tasks/task_package.yml
     params:
@@ -67,11 +67,11 @@ jobs:
       path: build/cities-ui-0.0.1-SNAPSHOT.jar
       current_app_name: {{APPNAME}}
 
-- name: test-cities-app
+- name: testAppOnPCF
   plan:
   - get: cities-ui
     trigger: true
-    passed: [deploy-cities-ui]
+    passed: [deployApp]
   - task: test
     file: cities-ui/ci/tasks/testAppOnPCF.yml
     params:
