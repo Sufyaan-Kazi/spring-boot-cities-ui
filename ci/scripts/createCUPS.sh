@@ -6,11 +6,12 @@ main()
 {
   SERVICE=citiesService
   cf_login 
-  EXISTS=`cf services | grep ${1} | wc -l | xargs`
+  EXISTS=`cf services | grep ${SERVICE} | wc -l | xargs`
   if [ $EXISTS -eq 0 ]
   then
-    URL=`cf apps | grep cities-service | xargs | cut -d " " -f 6`
-    cf cups citiesService -p '{"tags":"cities","uri":"http://'"$URL"'/cities"}'
+    cf cups citiesService -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
+  else
+    cf uups citiesService -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
   fi
   cf logout
 }

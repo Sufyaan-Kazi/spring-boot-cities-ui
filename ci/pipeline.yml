@@ -50,6 +50,7 @@ jobs:
       space: {{CF_SPACE}}
       ssl: {{CF_SSL}}
       APPNAME: {{APPNAME}}
+      CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 - name: deploy-cities-ui
   plan:
