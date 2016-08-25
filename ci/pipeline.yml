@@ -16,7 +16,7 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: check4Deps
+- name: checkPCFSpace
   plan:
   - get: cities-ui
     trigger: true
@@ -30,7 +30,7 @@ jobs:
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check4Deps]
+    passed: [checkPCFSpace]
   - task: test
     file: cities-ui/ci/tasks/task_test.yml
 
@@ -38,7 +38,7 @@ jobs:
   plan:
   - get: cities-ui
     trigger: true
-    passed: [check4Deps]
+    passed: [checkPCFSpace]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
