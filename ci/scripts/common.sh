@@ -1,6 +1,5 @@
 #!/bin/sh 
 set -e
-APPNAME=cities-ui
 
 abort()
 {
