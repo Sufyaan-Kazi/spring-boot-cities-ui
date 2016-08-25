@@ -16,7 +16,8 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: checkPCFSpace
+- name: checkDependencies
+  build_logs_to_retain: 5
   plan:
   - get: cities-ui
     trigger: true
@@ -27,18 +28,20 @@ jobs:
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 - name: testSrc
+  build_logs_to_retain: 5
   plan:
   - get: cities-ui
     trigger: true
-    passed: [checkPCFSpace]
+    passed: [checkDependencies]
   - task: test
     file: cities-ui/ci/tasks/task_test.yml
 
 - name: prepPCFSpace
+  build_logs_to_retain: 5
   plan:
   - get: cities-ui
     trigger: true
-    passed: [checkPCFSpace]
+    passed: [checkDependencies]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
@@ -53,6 +56,7 @@ jobs:
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 - name: deployApp
+  build_logs_to_retain: 5
   plan:
   - get: cities-ui
     trigger: true
@@ -68,6 +72,7 @@ jobs:
       current_app_name: {{APPNAME}}
 
 - name: testAppOnPCF
+  build_logs_to_retain: 5
   plan:
   - get: cities-ui
     trigger: true
