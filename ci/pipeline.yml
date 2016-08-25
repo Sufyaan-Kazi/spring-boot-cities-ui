@@ -4,7 +4,6 @@ resources:
   type: git
   source:
     uri: https://github.com/skazi-pivotal/spring-boot-cities-ui
-  check_every: 7s
 
 - name: deploy-app
   type: cf
@@ -50,6 +49,7 @@ jobs:
       space: {{CF_SPACE}}
       ssl: {{CF_SSL}}
       APPNAME: {{APPNAME}}
+      CITIES_SERVICE_NAME: {{CITIES_SERVICE_NAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 - name: deployApp

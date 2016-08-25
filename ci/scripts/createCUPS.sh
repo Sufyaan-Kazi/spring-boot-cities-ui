@@ -4,14 +4,13 @@ set -e
 
 main()
 {
-  SERVICE=citiesService
   cf_login 
-  EXISTS=`cf services | grep ${SERVICE} | wc -l | xargs`
+  EXISTS=`cf services | grep ${CITIES_SERVICE_NAME} | wc -l | xargs`
   if [ $EXISTS -eq 0 ]
   then
-    cf cups citiesService -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
+    cf cups ${CITIES_SERVICE_NAME} -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
   else
-    cf uups citiesService -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
+    cf uups ${CITIES_SERVICE_NAME} -p '{"tags":"cities","uri":"http://'"$CITIES_SERVICE_ROUTE"'/cities"}'
   fi
   cf logout
 }
