@@ -3,9 +3,21 @@ resources:
 - name: cities-ui
   type: git
   source:
-    uri: https://github.com/skazi-pivotal/spring-boot-cities-ui
+    uri: {{git-uri}}
+  check_every: 8s
 
-- name: deploy-app
+- name: resource-version
+  type: semver
+  source:
+    branch: version
+    driver: git
+    file: version
+    initial_version: 0.0.0
+    uri: {{GIT-SSH-URI}}
+    private_key: {{GIT_KEY}}
+    git_user: {{GIT_USER}}
+
+- name: deployToPCF
   type: cf
   source:
     api: {{CF_API}}
@@ -16,6 +28,14 @@ resources:
     skip_cert_check: true
 
 jobs:
+- name: testSrc
+  build_logs_to_retain: 5
+  plan:
+  - get: cities-ui
+    trigger: true
+  - task: test
+    file: cities-ui/ci/tasks/test.yml
+
 - name: checkDependencies
   build_logs_to_retain: 5
   plan:
@@ -27,21 +47,14 @@ jobs:
       APPNAME: {{APPNAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
-- name: testSrc
-  build_logs_to_retain: 5
-  plan:
-  - get: cities-ui
-    trigger: true
-    passed: [checkDependencies]
-  - task: test
-    file: cities-ui/ci/tasks/task_test.yml
 
 - name: prepPCFSpace
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
+    passed:
+      - checkDependencies
     trigger: true
-    passed: [checkDependencies]
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
     params:
@@ -55,28 +68,51 @@ jobs:
       CITIES_SERVICE_NAME: {{CITIES_SERVICE_NAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
-- name: deployApp
+- name: packageAndDeploy
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
+    passed:
+      - testSrc
+      - prepPCFSpace
     trigger: true
-    passed: [testSrc, prepPCFSpace]
+  - get: resource-version
+    params:
+      bump: patch
   - task: package
-    file: cities-ui/ci/tasks/task_package.yml
+    file: cities-ui/ci/tasks/package.yml
     params:
       APPNAME: {{APPNAME}}
-  - put: deploy-app
+  - put: resource-version
+    params: {file: resource-version/number}
+  - task: amendManifest
+    file: cities-ui/ci/tasks/amendManifest.yml
     params:
-      manifest: cities-ui/manifest.yml
-      path: build/cities-ui-0.0.1-SNAPSHOT.jar
+      APPNAME: {{APPNAME}}
+      username: {{CF_USERNAME}}
+  - put: deployToPCF
+    params:
+      manifest: output/manifest.yml
+      path: build/cities-ui-1.0.jar
       current_app_name: {{APPNAME}}
+  - task: addVersionInfo
+    file: cities-ui/ci/tasks/addVersionInfo.yml
+    params:
+      api: {{CF_API}}
+      organization: {{CF_ORG}}
+      space: {{CF_SPACE}}
+      username: {{CF_USERNAME}}
+      password: {{CF_PASSWORD}}
+      ssl: {{CF_SSL}}
+      APPNAME: {{APPNAME}}
 
 - name: testAppOnPCF
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
+    passed:
+      - packageAndDeploy
     trigger: true
-    passed: [deployApp]
   - task: test
     file: cities-ui/ci/tasks/testAppOnPCF.yml
     params:

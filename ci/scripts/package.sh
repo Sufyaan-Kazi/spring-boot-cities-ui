@@ -3,10 +3,13 @@
 
 main()
 {
-  echo_msg "Starting"
+  VERSION=`cat resource-version/number| sed -e 's/\./_/g'`
+  echo_msg "Starting assemble for ${APPNAME} at version: ${VERSION}"
   cd $APPNAME
-  ./gradlew build
+  #./gradlew assemble -P buildversion=$VERSION --no-daemon
+  ./gradlew assemble --no-daemon
   cp build/libs/*.jar ../build
+  ls ../build
 }
 
 trap 'abort $LINENO' 0

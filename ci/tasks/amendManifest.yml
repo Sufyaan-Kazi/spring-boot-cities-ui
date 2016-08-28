@@ -1,0 +1,16 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: busybox
+
+inputs:
+  - name: cities-ui
+
+outputs:
+  - name: output
+
+run:
+  path: "cities-ui/ci/scripts/amendManifest.sh"

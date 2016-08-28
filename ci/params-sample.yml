@@ -1,0 +1,15 @@
+git-uri: https://github.com/skazi-pivotal/spring-boot-cities-ui.git
+CF_API: https://api.run.haas-35.pez.pivotal.io
+CF_USERNAME: skazi
+CF_PASSWORD: letmein
+CF_ORG: skazi
+CF_SPACE: cities
+CF_SSL: --skip-ssl-validation
+APPNAME: cities-ui
+CITIES_SERVICE_NAME: citiesService
+CITIES_SERVICE_ROUTE: cities-service-unreferenced-slipper.cfapps.haas-35.pez.pivotal.io
+CREATE_FRESH_SPACE: 
+GIT-SSH-URI: git@github.com:skazi-pivotal/spring-boot-cities-ui.git
+GIT_USER: <<your github user id>>
+GIT_KEY: |-
+  <<your github private key>>

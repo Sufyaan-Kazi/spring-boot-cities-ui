@@ -1,5 +1,4 @@
 #!/bin/sh 
-set -e
 . $APPNAME/ci/scripts/common.sh
 
 main()
