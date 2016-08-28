@@ -42,6 +42,7 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-databind')
     compile('org.springframework.boot:spring-boot-starter-hateoas')
     compile('org.springframework.data:spring-data-commons')
+    compile("org.springframework.boot:spring-boot-starter-actuator")
     testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
 
