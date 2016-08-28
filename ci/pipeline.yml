@@ -36,7 +36,7 @@ jobs:
   - task: test
     file: cities-ui/ci/tasks/test.yml
 
-- name: checkDependencies
+- name: chkOnOthrMicrosvcs
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
@@ -48,12 +48,12 @@ jobs:
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
 
-- name: prepPCFSpace
+- name: prepSpace
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
     passed:
-      - checkDependencies
+      - chkOnOthrMicrosvcs
     trigger: true
   - task: create-cups
     file: cities-ui/ci/tasks/createCUPS.yml
@@ -68,13 +68,13 @@ jobs:
       CITIES_SERVICE_NAME: {{CITIES_SERVICE_NAME}}
       CITIES_SERVICE_ROUTE: {{CITIES_SERVICE_ROUTE}}
 
-- name: packageAndDeploy
+- name: packageNPush
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
     passed:
       - testSrc
-      - prepPCFSpace
+      - prepSpace
     trigger: true
   - get: resource-version
     params:
@@ -106,15 +106,15 @@ jobs:
       ssl: {{CF_SSL}}
       APPNAME: {{APPNAME}}
 
-- name: testAppOnPCF
+- name: testOnPCF
   build_logs_to_retain: 5
   plan:
   - get: cities-ui
     passed:
-      - packageAndDeploy
+      - packageNPush
     trigger: true
   - task: test
-    file: cities-ui/ci/tasks/testAppOnPCF.yml
+    file: cities-ui/ci/tasks/testOnPCF.yml
     params:
       api: {{CF_API}}
       username: {{CF_USERNAME}}
