@@ -4,7 +4,6 @@ resources:
   type: git
   source:
     uri: {{git-uri}}
-  check_every: 8s
 
 - name: resource-version
   type: semver
