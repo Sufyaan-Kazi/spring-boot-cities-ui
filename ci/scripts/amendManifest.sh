@@ -9,7 +9,7 @@ main()
   createVarsBasedOnVersion
   cd $APPNAME
   more manifest.yml
-  cat manifest.yml | sed "s/random-route: true/host: $APPNAME-$username/g" | sed "s/build\/libs\/cities-service-1.0.jar/..\/build\/cities-service-$VERSION.jar/g" > manifest.tmp
+  cat manifest.yml | sed "s/random-route: true/host: $APPNAME-$username/g" | sed "s/build\/libs\/$APPNAME-1.0.jar/..\/build\/$APPNAME-$VERSION.jar/g" > manifest.tmp
   echo ""
   mv manifest.tmp ../output/manifest.yml
   more ../output/manifest.yml
