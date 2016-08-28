@@ -3,6 +3,7 @@
 
 searchForCity()
 {
+  echo_msg "Checking for specific city"
   curl -s $URL | grep "Aldermoor"
   running=`curl -s $URL | grep "Aldermoor"`
   echo $running
@@ -14,9 +15,10 @@ main()
   cf_login
 
   summaryOfApps
-  echo $APPNAME
-  checkSpringBootAppOnPCF $APPNAME
+  checkAppIsDeployed $APPNAME
+  checkSpringBootAppOnPCF $URL
   searchForCity
+  
   cf logout
 }
 
