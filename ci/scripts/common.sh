@@ -51,6 +51,7 @@ exitIfNull()
 
 checkAppIsDeployed()
 {
+  echo_msg "Checking $1 is deployed to PCF and running ok"
   cf apps | grep $1 | xargs | cut -d " " -f 6
   URL=`cf apps | grep $1 | xargs | cut -d " " -f 6`
   echo "URL is: $URL"
@@ -59,9 +60,6 @@ checkAppIsDeployed()
 
 checkSpringBootAppOnPCF()
 {
-  echo_msg "Checking $1 is deployed to PCF and running ok"
-  checkAppIsDeployed $1
-
   echo_msg "Checking Spring Boot Actuator health endpoint"
   running=`curl -s $URL/health | grep '"status" : "UP"'`
   echo $running
