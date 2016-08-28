@@ -8,6 +8,7 @@ image_resource:
 
 inputs:
   - name: cities-ui
+  - name: resource-version
 
 outputs:
   - name: output
