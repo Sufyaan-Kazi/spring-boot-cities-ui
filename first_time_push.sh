@@ -2,7 +2,7 @@
 ./gradlew build
 cf delete -f cities-ui
 cf delete-service -f citiesService
-URL=cities-service-appreciational-redness.cfapps.haas-35.pez.pivotal.io
+ROUTE=cities-service-recognisable-wrongheadedness.cfapps.io
 
-cf cups citiesService -p '{"tags":"cities","uri":"http://'"$URL"'/cities"}'
+cf cups citiesService -p '{"tags":"cities","uri":"http://'"$ROUTE"'/cities"}'
 cf push
