@@ -1,7 +1,7 @@
 ./gradlew build
-cf delete -f cities-ui
+cf delete -f -r cities-ui
 cf delete-service -f citiesService
-ROUTE=cities-service-recognisable-wrongheadedness.cfapps.io
+URI=cities-service-recognisable-wrongheadedness.cfapps.io
 
-cf cups citiesService -p '{"tags":"cities","uri":"http://'"$ROUTE"'/cities"}'
+cf cups citiesService -p '{"tags":"cities","uri":"http://'"$URI"'/cities"}'
 cf push
