@@ -4,6 +4,4 @@ spring:
 ---
 spring:
   profiles: default
-  cities_ws_url: ${vcap.services.citiesService.credentials.uri:http://localhost:8080/cities}
-server:
-  port: 8081
+  cities_ws_url: ${vcap.services.citiesService.credentials.uri:http://192.168.1.162:8080/cities-service-1.0/cities}
