@@ -25,14 +25,14 @@ import io.pivotal.fe.demos.citiesui.model.PagedCities;
 
 @Repository
 @ConfigurationProperties(prefix="spring")
-public class CityRepository2 {
-	private static final Logger logger = LoggerFactory.getLogger(CityRepository2.class);
+public class CityRepository {
+	private static final Logger logger = LoggerFactory.getLogger(CityRepository.class);
 	private String cities_ws_url;
 	
 	//@Autowired
 	private RestTemplate restTemplate;
 	
-	public CityRepository2() {
+	public CityRepository() {
 		restTemplate = restTemplate();
 	}
 	

@@ -60,6 +60,15 @@ public class CityRepository {
 	}
 	
 	public PagedCities findByNameContains(String name, Integer page, Integer size) {
+                /*
+                  Remember to delete this aftr testing
+                */
+                try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+                /* end */
 		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "/search/nameContains?q=" + name + "&page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;
