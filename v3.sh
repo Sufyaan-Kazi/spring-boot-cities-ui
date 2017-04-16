@@ -1,4 +1,5 @@
 cp src/main/resources/templates/index2.html src/main/resources/templates/index.html
+./unsneaky.sh
 ./deploy.sh
-./sneaky.sh&
-./test.sh&
+sleep 15
+./test.sh
