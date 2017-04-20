@@ -51,7 +51,8 @@ public class CityRepository {
 	}
 	
 	public PagedCities findAll(Integer page, Integer size) {
-		//logger.info("Calling: " + cities_ws_url);
+		logger.info("Calling: " + cities_ws_url);
+                tempSleep();
 		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "?page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;
@@ -60,15 +61,8 @@ public class CityRepository {
 	}
 	
 	public PagedCities findByNameContains(String name, Integer page, Integer size) {
-                /*
-                  Remember to delete this aftr testing
-                */
-                try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-                /* end */
+		logger.info("Calling: " + cities_ws_url);
+                tempSleep();
 		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "/search/nameContains?q=" + name + "&page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;
@@ -76,6 +70,18 @@ public class CityRepository {
 
 		return responseEntity.getBody();
 	}
+
+        private void tempSleep(){
+        /*
+                  Remember to delete this aftr testing
+                */
+                try {
+                                        Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                }
+                /* end */
+}
 
 	public String getCities_ws_url() {
 		return cities_ws_url;
