@@ -18,3 +18,13 @@ hs_err_pid*
 .gradle/
 .project
 .settings/
+
+# IntelliJ Stuff
+.idea/
+.idea/gradle.xml
+.idea/modules.xml
+*.iml
+
+# Misc Stuff
+*.old
+*.log

@@ -25,8 +25,12 @@ import io.pivotal.fe.demos.citiesui.model.PagedCities;
 
 @Repository
 @ConfigurationProperties(prefix="spring")
+@Configuration
+@Profile("default")
 public class CityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(CityRepository.class);
+
+        @Value("cities_ws_url")
 	private String cities_ws_url;
 	
 	//@Autowired
