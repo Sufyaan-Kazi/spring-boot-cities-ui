@@ -4,6 +4,5 @@ spring:
 ---
 spring:
   profiles: default
-  cities_ws_url: http://cities-service-cities-service.52.51.91.140.xip.io/cities
 server:
   port: 8081
