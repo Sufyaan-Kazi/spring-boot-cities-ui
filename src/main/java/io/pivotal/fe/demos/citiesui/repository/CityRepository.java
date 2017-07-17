@@ -33,7 +33,7 @@ import io.pivotal.fe.demos.citiesui.model.PagedCities;
 public class CityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(CityRepository.class);
 
-        @Value("cities_ws_url")
+        @Value("${cities_ws_url}")
 	private String cities_ws_url;
 	
 	//@Autowired
