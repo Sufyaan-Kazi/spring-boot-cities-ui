@@ -1,8 +1,8 @@
 spring:
-  profiles.active: default
+  profiles.active: local
   
 ---
 spring:
-  profiles: default
+  profiles: local
 server:
   port: 8081
