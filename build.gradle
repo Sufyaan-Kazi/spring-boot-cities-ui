@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.7.RELEASE'
+        springBootVersion = '1.5.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -11,7 +11,7 @@ buildscript {
 }
 
 plugins {
-    id "io.spring.dependency-management" version "0.6.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
 }
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -50,6 +50,9 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
 
+bootRun {
+    systemProperties System.properties
+}
 
 eclipse {
     classpath {
