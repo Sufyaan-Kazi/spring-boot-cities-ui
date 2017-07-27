@@ -40,7 +40,13 @@ deployApp()
   testSrc
 
   echo_msg "Deploying $APPNAME from $gitproj"
-  cat ${APP_ENV_FILE} | oc new-app s2i-java:latest\~${gitproj} -l name=${APPNAME} --env-file=-
+  oc project spring-boot-cities-service
+  cities_ws_url=`oc get routes | tail -n 1 | xargs | cut -d ' ' -f2`
+  cities_ws_url=http://${cities_ws_url}/cities
+  oc project spring-boot-cities-ui
+  cat ${APP_ENV_FILE} > temp.txt
+  echo cities_ws_url=${cities_ws_url} >> temp.txt
+  cat temp.txt | oc new-app s2i-java:latest\~${gitproj} -l name=${APPNAME} --env-file=-
   sleep 3
   echo ""
   oc logs -f bc/${APPNAME}
