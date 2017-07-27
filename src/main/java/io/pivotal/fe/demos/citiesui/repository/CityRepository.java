@@ -23,7 +23,7 @@ import java.util.List;
 
 @Repository
 @Configuration
-@Profile("local")
+//@Profile("local")
 public class CityRepository {
 	private static final Logger logger = LoggerFactory.getLogger(CityRepository.class);
 

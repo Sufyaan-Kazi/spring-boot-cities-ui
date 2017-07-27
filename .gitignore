@@ -12,6 +12,7 @@
 hs_err_pid*
 /build/
 /bin/
+/target/
 
 # Eclipse Stuff
 .classpath
@@ -28,3 +29,6 @@ hs_err_pid*
 # Misc Stuff
 *.old
 *.log
+.DS_Store
+ci/params-suf.yml
+*.swp

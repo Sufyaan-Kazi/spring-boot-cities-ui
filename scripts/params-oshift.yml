@@ -1,0 +1,12 @@
+# Minishift
+uri=https://192.168.64.2:8443
+#uri=https://ec2-35-177-37-172.eu-west-2.compute.amazonaws.com:8443
+username=dev
+password=dev
+CREATE_FRESH_PROJ=y
+APPNAME=spring-boot-cities-ui
+APPVERSION=0.05
+APP_ENV_FILE=../src/main/resources/oshift-app.env
+# format -> uri#branch
+gitproj=https://github.com/Sufyaan-Kazi/spring-boot-cities-ui.git#openshift
+s2i=https://raw.githubusercontent.com/Sufyaan-Kazi/s2i-java/master/ose3/s2i-java-imagestream.json

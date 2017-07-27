@@ -6,3 +6,10 @@ spring:
   profiles: local
 server:
   port: 8081
+cities_ws_url: http://localhost:8080/cities
+
+---
+spring:
+  profiles: oshift
+server:
+  port: 8080
