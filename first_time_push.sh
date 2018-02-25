@@ -1,3 +1,6 @@
+#!/bin/bash 
+set -e
+
 ./gradlew build
 
 ./cleanup.sh
@@ -10,4 +13,5 @@ else
 fi
 
 cf cups citiesService -p '{"tags":"cities","uri":"http://'"$URI"'/cities"}'
-cf push
+BPACK=`cf buildpacks | grep java | grep true | head -n 1 | cut -d ' ' -f1 | xargs`
+cf push -b ${BPACK}

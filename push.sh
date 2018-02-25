@@ -1,2 +1,3 @@
 ./gradlew build
-cf push -b java_buildpack_offline
+BPACK={cf buildpacks | grep java | grep true | head -n 1 | cut -d ' ' -f1 | xargs}
+cf push -b ${BPACK}
