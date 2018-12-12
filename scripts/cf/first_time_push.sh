@@ -1,8 +1,13 @@
 #!/bin/bash 
 set -e
 
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+cd ../../
 ./gradlew build
 
+cd $SCRIPTPATH
 ./cleanup.sh
 
 if [ -z $1 ]
