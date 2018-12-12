@@ -6,17 +6,21 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
 
 plugins {
-    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
+
+group = 'sufyaankazi'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot' 
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
 jar {
     baseName = 'cities-ui'
@@ -55,6 +59,21 @@ eclipse {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.5.1'
+task buildDocker(type: Docker, dependsOn: build) {
+  push = false
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardError"
+        //events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
