@@ -7,3 +7,10 @@ spring:
   cities_ws_url: ${vcap.services.citiesService.credentials.uri:http://localhost:8080/cities}
 server:
   port: 8081
+
+---
+spring:
+  profiles: k8s
+  cities_ws_url: ${cities_ws_url}
+server:
+  port: 8080

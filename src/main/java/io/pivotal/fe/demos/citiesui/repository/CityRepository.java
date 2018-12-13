@@ -51,7 +51,7 @@ public class CityRepository {
 	}
 	
 	public PagedCities findAll(Integer page, Integer size) {
-		//logger.info("Calling: " + cities_ws_url);
+		logger.info("Calling: " + cities_ws_url);
 		ResponseEntity<PagedCities> responseEntity = restTemplate.getForEntity(cities_ws_url + "?page=" + page + "&size=" + size, PagedCities.class);
 		if (responseEntity.getStatusCode() != HttpStatus.OK) {
 			return null;

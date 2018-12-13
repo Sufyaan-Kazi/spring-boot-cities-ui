@@ -5,3 +5,4 @@ DATE=$(date '+%Y%m%d%H%M%S')
 YML_DIR=./yml
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
+SERVICE_LB=lb-cities-rest

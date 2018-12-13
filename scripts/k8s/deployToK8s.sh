@@ -14,6 +14,7 @@ main() {
   sudo docker tag sufyaankazi/$APPNAME:1.0 $REPONAME/$PROJNAME/$APPNAME
   sudo docker images
   sudo docker push $REPONAME/$PROJNAME/$APPNAME:latest
+  sudo docker system prune -f
 
   #Remove previous deployment
   echo -e "\n****************** Removing Previous Deploymet"
@@ -28,16 +29,25 @@ main() {
     kubectl delete svc lb-$APPNAME
   fi
 
-  #Change date label in yaml
+  #Change date label in yaml and ip of service
   echo -e "\n*********************** Deploying $APPNAME"
-  sed -e 's/DATE/'"$DATE"'/g' $YML_DIR/$APPNAME.yml > /tmp/$APPNAME_$DATE.yml
+  SERVICE_IP=$(kubectl get svc | grep $SERVICE_LB | xargs | cut -d " " -f4)
+  if [ -z $SERVICE_IP ]
+  then
+    echo "Could not locate backing microservice"
+    exit 1
+  fi
+  echo "Found service at: $SERVICE_IP"
+  sed -e 's/DATE/'"$DATE"'/g' $YML_DIR/$APPNAME.yml | sed -e 's/SERVICE_IP/'"$SERVICE_IP"'/g' > /tmp/$APPNAME_$DATE.yml
+
+  #Deploy
   kubectl create -f /tmp/$APPNAME_$DATE.yml
   rm -f /tmp/$APPNAME_$DATE.yml
   gcloud container images list --repository $REPONAME/$PROJNAME
 
   #Check status
   echo -e "\n********************* $APPNAME deployed, checking status"
-  getPodName "ContainerCreating"
+  getPodName ContainerCreating
   waitForAppToStart $PODNAME
 
   # Deploy Service
@@ -51,8 +61,7 @@ main() {
     EXT_IP=$(kubectl get svc | grep lb-$APPNAME | xargs | cut -d " " -f4)
   done
   sleep 1
-  echo "App is now available."
-  curl http://$EXT_IP/
+  echo "App is now available at: http://$EXT_IP/"
 }
 
 # Run the script

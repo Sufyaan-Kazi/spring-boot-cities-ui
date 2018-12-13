@@ -25,8 +25,6 @@ apply plugin: 'docker'
 jar {
     baseName = 'cities-ui'
 }
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -72,8 +70,7 @@ task buildDocker(type: Docker, dependsOn: build) {
 }
 
 test {
-    testLogging {
-        events "passed", "skipped", "failed", "standardError"
-        //events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
+	testLogging {
+	events "passed", "skipped", "failed", "standardError"
+	}
 }

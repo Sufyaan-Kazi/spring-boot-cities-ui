@@ -10,7 +10,7 @@ spec:
    # The port(s) that this service should serve on.
  - name: http
    port: 80
-   targetPort: 8081
+   targetPort: 8080
  # Label keys and values that must match in order to receive traffic for this service.
  selector:
    app: cities-ui

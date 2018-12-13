@@ -17,6 +17,9 @@ spec:
      - name: cities-ui
        image: eu.gcr.io/sufcloudnative/cities-ui:latest
        imagePullPolicy: Always
+       env:
+       - name: cities_ws_url
+         value: http://SERVICE_IP:8080/cities
        resources:
          requests:
            cpu: 100m
@@ -33,7 +36,7 @@ spec:
          periodSeconds: 5
        livenessProbe:
          httpGet:
-           path: /cities
+           path: /
            port: http-port
          initialDelaySeconds: 30
          timeoutSeconds: 10
