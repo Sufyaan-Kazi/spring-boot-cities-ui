@@ -4,7 +4,11 @@ https://twitter.com/Sufyaan_Kazi
 This is a simple Spring Boot UI which can consume CITY data and present it graphically using Thymeleaf. 
 ![Cities-ui](/docs/Cities-ui.png)
 
-It consumes data for example from this microservice: https://github.com/Sufyaan-Kazi/spring-boot-cities-service. The SCS branch uses Spring Cloud Services to discover the other Microservice.
+It consumes data for example from this microservice: https://github.com/Sufyaan-Kazi/spring-boot-cities-service. 
+
+To run this app in locally, simply execute ```./gradlew bootRun``` and access localhost:8081
+
+To run this app on kubernetes, navigate into scripts/k8s, and run deployToK8s.sh. (Change values in vars.txt i necessary)
 
 To run this app in Cloud Foundry:
 Edit the script first_time_push.sh and correct the URL of the running copy of the cities microservice (TIP: don't use https). Then simply run the script:
